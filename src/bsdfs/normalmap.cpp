@@ -155,6 +155,11 @@ public:
         result.t = cross(result.n, result.s);
         return result;
     }
+    
+    void traverse(TraversalCallback *callback) override {
+        callback->put_object("normalmap", m_normalmap.get());
+        m_nested_bsdf->traverse(callback);
+    }
 
     void traverse(TraversalCallback *callback) override {
        callback->put_object("normalmap", m_normalmap.get());
