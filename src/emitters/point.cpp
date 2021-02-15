@@ -122,6 +122,7 @@ public:
 
     void traverse(TraversalCallback *callback) override {
         callback->put_object("intensity", m_intensity.get());
+        Base::traverse(callback);
     }
 
     std::string to_string() const override {

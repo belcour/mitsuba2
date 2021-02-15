@@ -2136,6 +2136,7 @@ R"doc(Return the shape, to which the emitter is currently attached (const
 version))doc";
 
 static const char *__doc_mitsuba_Endpoint_world_transform = R"doc(Return the local space to world space transformation)doc";
+static const char *__doc_mitsuba_Endpoint_set_world_transform = R"doc(Set the local space to world space transformation)doc";
 
 static const char *__doc_mitsuba_FileResolver =
 R"doc(Simple class for resolving paths on Linux/Windows/Mac OS

@@ -161,6 +161,10 @@ public:
     const AnimatedTransform *world_transform() const {
         return m_world_transform.get();
     }
+    
+    void set_world_transform(ref<const AnimatedTransform> transform) {
+        m_world_transform = transform;
+    }
 
     /**
      * \brief Does the method \ref sample_ray() require a uniformly distributed
