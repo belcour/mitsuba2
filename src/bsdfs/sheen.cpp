@@ -76,7 +76,7 @@ public:
         // Ignore perfectly grazing configurations
         active &= NdotV > 0.f;
         if (unlikely(none_or<false>(active) ||
-            !ctx.is_enabled(BSDFFlags::DiffuseReflection))) {
+            !ctx.is_enabled(BSDFFlags::GlossyReflection))) {
             return { bs, 0.f };
         }
 
@@ -93,8 +93,9 @@ public:
         Float HdotN = Frame3f::cos_theta(h);
         Float NdotL = Frame3f::cos_theta(bs.wo);
         Float alpha = m_alpha->eval_1(si, active);
+        alpha = max(alpha, 1.0E-8);
 
-        Spectrum value = eval_F(HdotV)*eval_D(HdotN, alpha)*eval_G(NdotV, NdotL, alpha) / (NdotV);
+        Spectrum value = eval_F(HdotV)*eval_D(HdotN, alpha)*eval_G(NdotV, NdotL, alpha) / (4.0f * bs.pdf * NdotV);
         return { bs, select(active && bs.pdf > 0.f, unpolarized<Spectrum>(value), 0.f) };
     }
 
@@ -114,8 +115,9 @@ public:
         Float HdotN = Frame3f::cos_theta(h);
         Float HdotV = dot(h, si.wi);
         Float alpha = m_alpha->eval_1(si, active);
+        alpha = max(alpha, 1.0E-8);
 
-        Spectrum value = eval_F(HdotV)*eval_D(HdotN, alpha)*eval_G(NdotV, NdotL, alpha) / (NdotV * NdotL);
+        Spectrum value = eval_F(HdotV)*eval_D(HdotN, alpha)*eval_G(NdotV, NdotL, alpha) / (4.0f * NdotV);
         return select(active, unpolarized<Spectrum>(value), 0.0f);
     }
 
